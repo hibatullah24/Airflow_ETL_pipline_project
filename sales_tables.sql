@@ -1,0 +1,66 @@
+create database saleDBcustomers;
+use saleDB;
+/*Contains core order information (1 row per order line).*/
+CREATE TABLE IF NOT EXISTS orders (
+    ORDERNUMBER INT,
+    ORDERLINENUMBER INT,
+    ORDERDATE DATE,
+    STATUS VARCHAR(50),
+    QTR_ID INT,
+    MONTH_ID INT,
+    YEAR_ID INT,
+    PRODUCTCODE VARCHAR(50),
+    CUSTOMERNAME VARCHAR(100),
+    SALES DECIMAL(10,2),
+    TOTAL_PRICE DECIMAL(10,2),
+    PRICE_USD DECIMAL(10,2),
+    PRIMARY KEY (ORDERNUMBER, ORDERLINENUMBER)
+);
+
+
+
+
+
+
+/*Date dimension for analytical processing.*/
+CREATE TABLE IF NOT EXISTS dates (
+    ORDERDATE DATE PRIMARY KEY,
+    QTR_ID INT,
+    MONTH_ID INT,
+    YEAR_ID INT
+);
+
+
+
+CREATE TABLE IF NOT EXISTS customers (
+    CUSTOMERNAME VARCHAR(100) PRIMARY KEY,
+    CONTACTLASTNAME VARCHAR(100),
+    CONTACTFIRSTNAME VARCHAR(100),
+    PHONE VARCHAR(50),
+    ADDRESSLINE1 TEXT,
+    CITY VARCHAR(100),
+    POSTALCODE VARCHAR(20),
+    COUNTRY VARCHAR(50),
+    TERRITORY VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS order_details (
+    ORDERNUMBER INT,
+    ORDERLINENUMBER INT,
+    QUANTITYORDERED INT,
+    PRICEEACH DECIMAL(10,2),
+    MSRP DECIMAL(10,2),
+    DEALSIZE VARCHAR(50),
+    FOREIGN KEY (ORDERNUMBER, ORDERLINENUMBER) REFERENCES orders(ORDERNUMBER, ORDERLINENUMBER)
+);
+
+select * from order_details;
+select * from orders;
+select * from customers;
+select * from customers;
+select * from dates;
+select * from order_details;
+
+
+
+
